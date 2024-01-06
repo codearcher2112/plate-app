@@ -1,0 +1,40 @@
+{
+  "name": "Plate",
+  "short_name": "Plate",
+  "description": "Plate is a web application designed to bring a world of delicious recipes to your fingertips.",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "sizes":"512x512",
+      "src":"icon512_maskable.png",
+      "type":"image/png",
+      "purpose":"maskable"
+    },
+    {
+      "sizes":"512x512",
+      "src":"icon512_rounded.png",
+      "type":"image/png",
+      "purpose":"any"
+    }
+  ],
+  "theme_color": "#8936FF",
+  "background_color": "#2EC6FE",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
