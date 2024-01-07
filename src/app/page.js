@@ -1,16 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react';
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from 'framer-motion';
 import { db } from './firebase';
 import { collection, doc, addDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
 
 export default function Home() {
-    const [items, setItems] = useState([
-        // { name: 'Sushi', cookingTime: '1h'},
-        // { name: 'Pizza', cookingTime: '30m'},
-        // { name: 'Cheeseburger', cookingTime: '15m'},
-    ]);
-    const [newItem, setNewItem] = useState({ name: '', cookingTime: '' })
+    const [items, setItems] = useState([]);
+    const [newItem, setNewItem] = useState({ name: '', cookingTime: '' });
 
     // Add item to database
     const addItem = async (e) => {
@@ -89,41 +85,42 @@ export default function Home() {
                 )}
 
                 <ul className="grid gap-y-2 mt-5">
-                    {items.map((item, id) => (
-                        <motion.li
-                            key={id}
-                            className="grid grid-cols-3 gap-4 py-2 px-3 bg-cyan-400 rounded-xl"
-                            initial={ {
-                                opacity: 0,
-                                transform: 'translateY(-15px)'
-                            } }
-                            animate={ {
-                                opacity: 1,
-                                transform: 'translateY(0)'
-                            } }
-                            exit={ {
-                                opacity: 0,
-                                transform: 'translateY(-15px)'
-                            } }
-                            transition={ { duration: 0.6, ease: 'easeInOut' } }
-                        >
-                            <span>
-                                {item.name}
-                            </span>
-                            <span>
-                                {`Cooking time is ${item.cookingTime}`}
-                            </span>
-                            <span className="flex justify-end">
-                                <button
-                                    type="button"
-                                    className="self-end"
-                                    onClick={() => deleteItem(item.id)}
-                                >
-                                    X
-                                </button>
-                            </span>
-                        </motion.li>
-                    ))}
+                    <AnimatePresence>
+                        {items.map((item) => (
+                            <motion.li
+                                key={item.id}
+                                className="grid grid-cols-3 gap-4 py-2 px-3 bg-cyan-400 rounded-xl"
+                                initial={ {
+                                    opacity: 0,
+                                    transform: 'translateY(-15px)'
+                                } }
+                                animate={ {
+                                    opacity: 1,
+                                    transform: 'translateY(0)'
+                                } }
+                                exit={ {
+                                    opacity: 0,
+                                } }
+                                transition={ { duration: 0.6, ease: 'easeInOut' } }
+                            >
+                                <span>
+                                    {item.name}
+                                </span>
+                                <span>
+                                    {`Cooking time is ${item.cookingTime}`}
+                                </span>
+                                <span className="flex justify-end">
+                                    <button
+                                        type="button"
+                                        className="self-end"
+                                        onClick={() => deleteItem(item.id)}
+                                    >
+                                        X
+                                    </button>
+                                </span>
+                            </motion.li>
+                        ))}
+                    </AnimatePresence>
                 </ul>
             </div>
         </main>
