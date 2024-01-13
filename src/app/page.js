@@ -57,14 +57,14 @@ export default function Home() {
             <div className="p-4">
                 <form className="flex gap-x-2">
                     <input
-                        className="py-1 px-3 border border-solid border-black dark:border-slate-50/[0.5] rounded-xl outline-0 text-black transition-all duration-300 ease-in-out focus:border-black"
+                        className="py-1 px-3 border border-solid border-black dark:border-slate-50/[0.5] rounded-xl outline-0 transition-all duration-300 ease-in-out focus:border-black"
                         type="text"
                         placeholder="Enter dish name"
                         value={newItem.name}
                         onChange={e => setNewItem({ ...newItem, name: e.target.value })}
                     />
                     <input
-                        className="py-1 px-3 border border-solid border-black dark:border-slate-50/[0.5] rounded-xl outline-0 text-black transition-all duration-300 ease-in-out focus:border-black"
+                        className="py-1 px-3 border border-solid border-black dark:border-slate-50/[0.5] rounded-xl outline-0 transition-all duration-300 ease-in-out focus:border-black"
                         type="text"
                         placeholder="Enter cooking time"
                         value={newItem.cookingTime}
