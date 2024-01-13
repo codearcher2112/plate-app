@@ -1,7 +1,12 @@
-import { Inter } from 'next/font/google'
 import './globals.css'
+import { Inter as FontSans } from 'next/font/google'
+import { ThemeProvider } from '@/components/theme-provider'
+import { cn } from '@/lib/utils'
 
-const inter = Inter({ subsets: ['latin'] })
+export const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 
 export const metadata = {
   manifest: 'manifest.json',
@@ -16,7 +21,21 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+          className={cn(
+            "font-sans antialiased",
+            fontSans.variable
+          )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+            {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
