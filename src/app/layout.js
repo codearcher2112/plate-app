@@ -1,7 +1,9 @@
-import './globals.css'
-import { Inter as FontSans } from 'next/font/google'
-import { ThemeProvider } from '@/components/theme-provider'
-import { cn } from '@/lib/utils'
+import './globals.css';
+import { Inter as FontSans } from 'next/font/google';
+import { ThemeProvider } from '@/components/theme-provider';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { cn } from '@/lib/utils';
 
 export const fontSans = FontSans({
   subsets: ['latin'],
@@ -33,7 +35,9 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+            <Header />
             {children}
+            <Footer />
         </ThemeProvider>
       </body>
     </html>
