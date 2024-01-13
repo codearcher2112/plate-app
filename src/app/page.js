@@ -1,52 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { db } from './firebase';
-import { collection, doc, addDoc, onSnapshot, deleteDoc } from 'firebase/firestore';
+import { useRecipeContext } from '@/context/RecipeContext';
 
 export default function Home() {
-    const [items, setItems] = useState([]);
-    const [newItem, setNewItem] = useState({ name: '', cookingTime: '' });
-
-    // Add item to database
-    const addItem = async (e) => {
-        e.preventDefault();
-
-        if (newItem.name !== '' && newItem.cookingTime !== '') {
-            // setItems([...items, newItem]);
-            await addDoc(collection(db, 'items'), {
-                name: newItem.name.trim(),
-                cookingTime: newItem.cookingTime.trim(),
-            });
-
-            setNewItem({ name: '', cookingTime: '' })
-        }
-    }
-
-    // Read item from database
-    useEffect(() => {
-        const q = collection(db, 'items');
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            let itemArr = [];
-
-            querySnapshot.forEach(doc => {
-                itemArr.push({...doc.data(), id: doc.id});
-            })
-
-            setItems(itemArr);
-        });
-
-        // Cleanup the subscription when the component unmounts
-        return () => {
-            unsubscribe();
-        };
-    }, []);
-
-    // Delete item from database
-    const deleteItem = async (id) => {
-        await deleteDoc(doc(db, 'items', id))
-    }
+    const { items, newItem, setNewItem, addItem, deleteItem } = useRecipeContext();
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-center gap-y-4 p-24">
