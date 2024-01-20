@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter as FontSans } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
+import { RecipeProvider } from '@/context/RecipeContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
@@ -35,9 +36,11 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-            <Header />
-            {children}
-            <Footer />
+            <RecipeProvider>
+                <Header />
+                {children}
+                <Footer />
+            </RecipeProvider>
         </ThemeProvider>
       </body>
     </html>
