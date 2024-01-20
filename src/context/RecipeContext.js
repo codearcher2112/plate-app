@@ -12,18 +12,19 @@ export const useRecipeContext = () => {
 
 export const RecipeProvider = ({ children }) => {
     const [items, setItems] = useState([]);
-    const [newItem, setNewItem] = useState({ name: '', cookingTime: '' });
+    const [newItem, setNewItem] = useState({ title: '', ingredients: '', instructions: '' });
 
     const addItem = async (e) => {
         e.preventDefault();
 
-        if (newItem.name !== '' && newItem.cookingTime !== '') {
+        if (newItem.title !== '' && newItem.ingredients !== '' && newItem.instructions !== '') {
             await addDoc(collection(db, 'items'), {
-                name: newItem.name.trim(),
-                cookingTime: newItem.cookingTime.trim(),
+                title: newItem.title.trim(),
+                ingredients: newItem.ingredients.trim(),
+                instructions: newItem.instructions.trim(),
             });
 
-            setNewItem({ name: '', cookingTime: '' });
+            setNewItem({ title: '', ingredients: '', instructions: '', });
         }
     };
 
