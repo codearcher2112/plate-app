@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecipeContext } from '@/context/RecipeContext';
 import { Button } from '@/components/ui/button';
@@ -27,12 +28,18 @@ import { PlusIcon } from '@radix-ui/react-icons';
 
 export default function Home() {
     const { items, newItem, setNewItem, addItem, deleteItem } = useRecipeContext();
+    const [open, setOpen] = useState(false);
+
+    const handleAddItem = () => {
+        addItem();
+        setOpen(false);
+    };
 
     return (
         <main className="min-h-screen py-24">
             <div className="container mx-auto px-4">
                 <div className="main__inner-conatiner flex flex-col items-center">
-                    <Dialog>
+                    <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button
                                 variant="outline"
@@ -95,7 +102,9 @@ export default function Home() {
                             </div>
 
                             <DialogFooter>
-                                <Button type="submit" onClick={addItem}>Add to recipe list</Button>
+                                <Button type="submit" onClick={handleAddItem}>
+                                    Add to recipe list
+                                </Button>
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
