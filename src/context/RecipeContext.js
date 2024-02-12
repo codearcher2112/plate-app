@@ -14,9 +14,7 @@ export const RecipeProvider = ({ children }) => {
     const [items, setItems] = useState([]);
     const [newItem, setNewItem] = useState({ title: '', ingredients: '', instructions: '' });
 
-    const addItem = async (e) => {
-        e.preventDefault();
-
+    const addItem = async () => {
         if (newItem.title !== '' && newItem.ingredients !== '' && newItem.instructions !== '') {
             await addDoc(collection(db, 'items'), {
                 title: newItem.title.trim(),
