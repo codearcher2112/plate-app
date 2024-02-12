@@ -11,6 +11,10 @@ const withPWA = require("@ducanh2912/next-pwa").default({
     }
 });
 
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        domains: ['firebasestorage.googleapis.com']
+    }
+};
 
 module.exports = withPWA(nextConfig);
