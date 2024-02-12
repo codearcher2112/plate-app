@@ -25,9 +25,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 
 export default function Home() {
-    const { items, newItem, setNewItem, addItem, deleteItem } = useRecipeContext();
+    const { items, newItem, setNewItem, addItem, deleteItem, handleImageUpload } = useRecipeContext();
     const [open, setOpen] = useState(false);
 
     const handleAddItem = () => {
@@ -97,7 +98,11 @@ export default function Home() {
 
                                 <div className="grid w-full items-center gap-2">
                                     <Label htmlFor="picture">Picture</Label>
-                                    <Input id="picture" type="file"/>
+                                    <Input
+                                        id="picture"
+                                        type="file"
+                                        onChange={(e) => handleImageUpload(e.target.files[0])}
+                                    />
                                 </div>
                             </div>
 
@@ -140,6 +145,7 @@ export default function Home() {
                                     >
                                         <Card className="h-full">
                                             <CardHeader>
+                                                <Image width={250} height={250} src={item.imageUrl} alt={item.title} />
                                                 <CardTitle className="capitalize">
                                                     {item.title}
                                                 </CardTitle>
