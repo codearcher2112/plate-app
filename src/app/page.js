@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import Hero from '@/components/Hero';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecipeContext } from '@/context/RecipeContext';
 import { Button } from '@/components/ui/button';
@@ -16,7 +17,6 @@ import {
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -24,9 +24,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusIcon } from '@radix-ui/react-icons';
+import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
-import Hero from '@/components/Hero'
+import Link from 'next/link';
 
 export default function Home() {
     const { items, newItem, setNewItem, addItem, deleteItem, handleImageUpload } = useRecipeContext();
@@ -37,9 +37,11 @@ export default function Home() {
         setOpen(false);
     };
 
+    const staggerDelay = (index) => index * 0.1;
+
     return (
         <>
-            <Hero/>
+            <Hero />
             <main className="min-h-screen py-24">
                 <div className="container mx-auto px-4">
                     <div className="main__inner-conatiner flex flex-col items-center">
@@ -117,71 +119,127 @@ export default function Home() {
                             </DialogContent>
                         </Dialog>
 
-                        <h1 className="max-w-2xl text-3xl text-center">
-                            Plate is a web application designed to bring a world of delicious recipes to your fingertips
-                        </h1>
+                        <div className="max-w-2xl text-center">
+                            <motion.h2
+                                className="text-4xl"
+                                initial={ {
+                                    opacity: 0,
+                                    transform: 'translateY(20px)'
+                                } }
+                                whileInView={ {
+                                    opacity: 1,
+                                    transform: 'translateY(0)'
+                                } }
+                                exit={ {
+                                    opacity: 0,
+                                } }
+                                transition={ { duration: 0.6, ease: 'easeInOut', } }
+                                viewport={{ once: true, amount: 0.8 }}
+                            >
+                                <span className="text-red-600">Explore</span> an extensive collection of easy-to-follow recipes curated from around the world, all in one convenient place.
+                            </motion.h2>
+
+                            <motion.p
+                                className="mt-8"
+                                initial={ {
+                                    opacity: 0,
+                                    transform: 'translateY(20px)'
+                                } }
+                                whileInView={ {
+                                    opacity: 1,
+                                    transform: 'translateY(0)'
+                                } }
+                                exit={ {
+                                    opacity: 0,
+                                } }
+                                transition={ { duration: 0.6, ease: 'easeInOut', } }
+                                viewport={{ once: true, amount: 0.8 }}
+                            >
+                                From quick weeknight dinners to indulgent desserts, discover dishes to satisfy every craving and skill level.
+                                Say goodbye to recipe ruts and hello to delicious possibilities with Plate.
+                            </motion.p>
+                        </div>
 
                         <div className="w-full">
                             {items.length < 1 ? ('') : (
-                                <div className="mt-5">
+                                <motion.div
+                                    className="mt-5"
+                                    initial={ {
+                                        opacity: 0,
+                                    } }
+                                    whileInView={ {
+                                        opacity: 1,
+                                    } }
+                                    exit={ {
+                                        opacity: 0,
+                                    } }
+                                    transition={ { duration: 0.6, ease: 'easeInOut', } }
+                                    viewport={{ once: true, amount: 0.8 }}
+                                >
                                     {`${items.length} dishes`}
-                                </div>
+                                </motion.div>
                             )}
 
                             <ul className="grid grid-cols-1 gap-2 mt-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <AnimatePresence>
-                                    {items.map((item) => (
+                                    {items.map((item, index) => (
                                         <motion.li
                                             key={item.id}
                                             initial={ {
                                                 opacity: 0,
-                                                transform: 'translateY(-15px)'
+                                                transform: 'translateY(15px)'
                                             } }
-                                            animate={ {
+                                            whileInView={ {
                                                 opacity: 1,
                                                 transform: 'translateY(0)'
                                             } }
                                             exit={ {
                                                 opacity: 0,
                                             } }
-                                            transition={ { duration: 0.6, ease: 'easeInOut' } }
+                                            transition={ { duration: 0.6, ease: 'easeInOut', delay: staggerDelay(index), } }
+                                            viewport={{ once: true, amount: 0.7 }}
                                         >
-                                            <Card className="h-full">
-                                                <CardHeader>
-                                                    <Image width={250} height={250} src={item.imageUrl} alt={item.title} />
-                                                    <CardTitle className="capitalize">
-                                                        {item.title}
-                                                    </CardTitle>
-                                                    <CardDescription>
-                                                        {`Ingredients are: ${item.ingredients}`}
-                                                    </CardDescription>
+                                            <Card className="card h-full rounded-md overflow-hidden group">
+                                                <CardHeader className="relative p-0 space-y-0">
+                                                    <div className="card__image-wrapper relative overflow-hidden after:absolute after:inset-0 after:bg-black/40">
+                                                        <Image
+                                                            priority={true}
+                                                            width={400}
+                                                            height={400}
+                                                            src={item.imageUrl}
+                                                            alt={item.title}
+                                                            className="w-full h-full aspect-square object-cover transition-all duration-500 ease-out group-hover:scale-110"
+                                                        />
+                                                    </div>
+
+                                                    <CardContent className="absolute inset-0 pt-6 px-6 pb-20">
+                                                        <CardTitle className="capitalize text-white">
+                                                            {item.title}
+                                                        </CardTitle>
+                                                    </CardContent>
+
+                                                    <Link className="absolute inset-0 block" href={`/recipes/${item.id}`} />
+
+                                                    <CardFooter className="absolute right-0 bottom-0 p-6">
+                                                        <Button
+                                                            type="button"
+                                                            variant="destructive"
+                                                            className="rounded-md duration-300 hover:bg-red-400"
+                                                            onClick={() => deleteItem(item.id)}
+                                                        >
+                                                            <TrashIcon className="w-6 h-6" />
+                                                        </Button>
+                                                    </CardFooter>
                                                 </CardHeader>
-
-                                                <CardContent>
-                                                    <p>{`${item.instructions}`}</p>
-                                                </CardContent>
-
-                                                <CardFooter>
-                                                    <p>Card Footer</p>
-                                                </CardFooter>
                                             </Card>
-                                            {/*<span className="flex justify-end">
-                                                <button
-                                                    type="button"
-                                                    className="self-end"
-                                                    onClick={() => deleteItem(item.id)}
-                                                >
-                                                    X
-                                                </button>
-                                            </span>*/}
-                                    </motion.li>
+                                        </motion.li>
                                     ))}
                                 </AnimatePresence>
                             </ul>
                         </div>
                     </div>
                 </div>
-        </main>
+            </main>
         </>
     )
 }
