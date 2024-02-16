@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Hero from '@/components/Hero';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRecipeContext } from '@/context/RecipeContext';
+import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -29,6 +30,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
+    const { user } = UserAuth();
     const { items, newItem, setNewItem, addItem, deleteItem, handleImageUpload } = useRecipeContext();
     const [open, setOpen] = useState(false);
 
@@ -46,15 +48,17 @@ export default function Home() {
                 <div className="container mx-auto px-4">
                     <div className="main__inner-conatiner flex flex-col items-center">
                         <Dialog open={open} onOpenChange={setOpen}>
-                            <DialogTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    className="fixed bottom-12 right-10 z-10 bg-black border-black text-white transition-all duration-500 ease-in-out dark:bg-white dark:border-white dark:text-black dark:hover:bg-black dark:hover:border-white dark:hover:text-white"
-                                >
-                                    <PlusIcon className="w-5 h-5 mr-2" />
-                                    Add New Recipe
-                                </Button>
-                            </DialogTrigger>
+                            {!user ? null : (
+                                <DialogTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className="fixed bottom-12 right-10 z-10 bg-black border-black text-white transition-all duration-500 ease-in-out dark:bg-white dark:border-white dark:text-black dark:hover:bg-black dark:hover:border-white dark:hover:text-white"
+                                    >
+                                        <PlusIcon className="w-5 h-5 mr-2" />
+                                        Add New Recipe
+                                    </Button>
+                                </DialogTrigger>
+                            )}
 
                             <DialogContent className="max-w-[90%] sm:max-w-md">
                                 <DialogHeader>
@@ -220,16 +224,18 @@ export default function Home() {
 
                                                     <Link className="absolute inset-0 block" href={`/recipes/${item.id}`} />
 
-                                                    <CardFooter className="absolute right-0 bottom-0 p-6">
-                                                        <Button
-                                                            type="button"
-                                                            variant="destructive"
-                                                            className="rounded-md duration-300 hover:bg-red-400"
-                                                            onClick={() => deleteItem(item.id)}
-                                                        >
-                                                            <TrashIcon className="w-6 h-6" />
-                                                        </Button>
-                                                    </CardFooter>
+                                                    {!user ? null : (
+                                                        <CardFooter className="absolute right-0 bottom-0 p-6">
+                                                            <Button
+                                                                type="button"
+                                                                variant="destructive"
+                                                                className="rounded-md duration-300 hover:bg-red-400"
+                                                                onClick={() => deleteItem(item.id)}
+                                                            >
+                                                                <TrashIcon className="w-6 h-6" />
+                                                            </Button>
+                                                        </CardFooter>
+                                                    )}
                                                 </CardHeader>
                                             </Card>
                                         </motion.li>
