@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from 'framer-motion';
 import { FaBowlFood } from "react-icons/fa6";
 import { CiForkAndKnife } from "react-icons/ci";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function RecipePage({params}) {
     const { items } = useRecipeContext();
@@ -106,6 +107,11 @@ export default function RecipePage({params}) {
                                 </div>
                                 <p>{recipe.instructions}</p>
                             </motion.div>
+
+                            <Avatar>
+                                <AvatarImage src={recipe.avatarUrl} />
+                                <AvatarFallback>X</AvatarFallback>
+                            </Avatar>
                         </div>
                     </div>
                 ) : (

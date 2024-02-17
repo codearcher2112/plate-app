@@ -225,7 +225,7 @@ export default function Home() {
 
                                                     <Link className="absolute inset-0 block" href={`/recipes/${item.id}`} />
 
-                                                    <CardFooter className="absolute right-0 bottom-0 p-6">
+                                                    <CardFooter className="absolute right-0 bottom-0 left-0 p-6">
                                                         <Avatar>
                                                             <AvatarImage src={item.avatarUrl} />
                                                             <AvatarFallback>X</AvatarFallback>
@@ -235,7 +235,7 @@ export default function Home() {
                                                                 <Button
                                                                     type="button"
                                                                     variant="destructive"
-                                                                    className="rounded-md duration-300 hover:bg-red-400"
+                                                                    className="ml-auto rounded-md duration-300 hover:bg-red-400"
                                                                     onClick={() => deleteItem(item.id)}
                                                                 >
                                                                     <TrashIcon className="w-6 h-6" />
