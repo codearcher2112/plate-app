@@ -37,7 +37,7 @@ export default function ProfilePage({params}) {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex justify-center items-center min-h-[60vh] py-24 text-5xl">
+                    <div className="flex justify-center items-center min-h-[60vh] py-24 text-3xl sm:text-5xl text-center">
                         You must logged in to view this page
                     </div>)}
             </div>
