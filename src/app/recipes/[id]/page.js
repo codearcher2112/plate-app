@@ -11,11 +11,11 @@ export default function RecipePage({params}) {
     const recipe = items.find(item => item.id === params.id);
 
     return (
-        <main className="recipe-detail py-24">
+        <main className="recipe-detail sm:py-24 py-12">
             <div className="recipe-detail__container container mx-auto px-4">
                 {recipe ? (
                     <div className="recipe-detail__columns grid grid-cols-3 gap-10">
-                        <div className="recipe-detail__column recipe-detail__column--1">
+                        <div className="recipe-detail__column recipe-detail__column--1 col-span-3 sm:col-span-1">
                             <motion.div
                                 className="recipe-detail__image-wrapper rounded-lg overflow-hidden shadow-2xl dark:shadow-white"
                                 initial={ {
@@ -42,7 +42,7 @@ export default function RecipePage({params}) {
                             </motion.div>
                         </div>
 
-                        <div className="recipe-detail__column recipe-detail__column--2 col-span-2 flex flex-col gap-10">
+                        <div className="recipe-detail__column recipe-detail__column--2 col-span-3 sm:col-span-2 flex flex-col gap-10">
                             <motion.h1
                                 className="text-5xl text-red-600"
                                 initial={ {
