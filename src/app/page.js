@@ -125,7 +125,7 @@ export default function Home() {
 
                         <div className="max-w-2xl text-center">
                             <motion.h2
-                                className="text-4xl"
+                                className="text-2xl sm:text-4xl"
                                 initial={ {
                                     opacity: 0,
                                     transform: 'translateY(20px)'
