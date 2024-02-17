@@ -28,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Home() {
     const { user } = UserAuth();
@@ -224,18 +225,23 @@ export default function Home() {
 
                                                     <Link className="absolute inset-0 block" href={`/recipes/${item.id}`} />
 
-                                                    {!user ? null : (
-                                                        <CardFooter className="absolute right-0 bottom-0 p-6">
-                                                            <Button
-                                                                type="button"
-                                                                variant="destructive"
-                                                                className="rounded-md duration-300 hover:bg-red-400"
-                                                                onClick={() => deleteItem(item.id)}
-                                                            >
-                                                                <TrashIcon className="w-6 h-6" />
-                                                            </Button>
-                                                        </CardFooter>
-                                                    )}
+                                                    <CardFooter className="absolute right-0 bottom-0 p-6">
+                                                        <Avatar>
+                                                            <AvatarImage src={item.avatarUrl} />
+                                                            <AvatarFallback>X</AvatarFallback>
+                                                        </Avatar>
+
+                                                        {!user ? null : (
+                                                                <Button
+                                                                    type="button"
+                                                                    variant="destructive"
+                                                                    className="rounded-md duration-300 hover:bg-red-400"
+                                                                    onClick={() => deleteItem(item.id)}
+                                                                >
+                                                                    <TrashIcon className="w-6 h-6" />
+                                                                </Button>
+                                                        )}
+                                                    </CardFooter>
                                                 </CardHeader>
                                             </Card>
                                         </motion.li>
